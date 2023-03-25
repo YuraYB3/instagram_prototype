@@ -2,8 +2,11 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:instagram_prototype/Model/PostModel.dart';
 import 'package:instagram_prototype/Model/StoryModel.dart';
+import 'package:firebase_core/firebase_core.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   runApp(MaterialApp(
     title: 'Flutter Demo',
     theme: ThemeData(
@@ -89,10 +92,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       ),
                       child: ClipRRect(
                           borderRadius: BorderRadius.circular(30),
-                          child: Image.network(
-                            storyList[index].storyImage,
-                            fit: BoxFit.cover,
-                          )),
+                          child: Container()),
                     ),
                     Text(
                       storyList[index].userName,
@@ -127,10 +127,7 @@ class _MyHomePageState extends State<MyHomePage> {
                           ),
                           child: ClipRRect(
                               borderRadius: BorderRadius.circular(30),
-                              child: Image.network(
-                                postList[index].userImage,
-                                fit: BoxFit.cover,
-                              )),
+                              child: Container()),
                         ),
                         Column(
                           mainAxisAlignment: MainAxisAlignment.start,
@@ -155,10 +152,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         decoration: const BoxDecoration(
                           color: Colors.blueGrey,
                         ),
-                        child: Image.network(
-                          postList[index].postImage,
-                          fit: BoxFit.cover,
-                        )),
+                        child: Container()),
                     Container(height: 5),
                     Row(
                       children: [
