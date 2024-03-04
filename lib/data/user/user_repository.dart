@@ -1,12 +1,13 @@
 // ignore_for_file: file_names
+
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:instagram_prototype/data/user/user.dart';
+import 'package:instagram_prototype/domain/user/iuser.dart';
 
-import '../Model/UserModel.dart';
-
-class DatabaseUserService {
+class UserRepository {
   final String? uid;
 
-  DatabaseUserService({required this.uid});
+  UserRepository({required this.uid});
 
   final CollectionReference usersCollection =
       FirebaseFirestore.instance.collection('users');
@@ -17,14 +18,16 @@ class DatabaseUserService {
         .set({'name': name, 'surname': surname, 'email': email, 'userID': uid});
   }
 
-  List<UserModel>? _userListFromSnapshot(QuerySnapshot snapshot) {
+  List<IUSer>? _userListFromSnapshot(QuerySnapshot snapshot) {
     return snapshot.docs.map((doc) {
       return UserModel(
-          name: doc.get('name') ?? "", surname: doc.get('surname') ?? "");
+          name: doc.get('name') ?? "",
+          surname: doc.get('surname') ?? "",
+          email: doc.get('email'));
     }).toList();
   }
 
-  Stream<List<UserModel>?> get users {
+  Stream<List<IUSer>?> get users {
     return usersCollection.snapshots().map(_userListFromSnapshot);
   }
 }

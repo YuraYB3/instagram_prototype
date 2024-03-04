@@ -1,25 +1,20 @@
 import 'package:flutter/material.dart';
-import 'package:instagram_prototype/Services/Auth.dart';
-import 'package:instagram_prototype/Services/UserPost.dart';
 
-import '../../Model/PostModel.dart';
-import '../../Model/StoryModel.dart';
+import 'package:instagram_prototype/data/post/post_repository.dart';
 
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key});
+import '../../../data/post/post.dart';
+import '../../../data/story/story.dart';
+
+class HomeView extends StatefulWidget {
+  const HomeView({super.key});
 
   @override
-  State<MyHomePage> createState() => _MyHomePageState();
+  State<HomeView> createState() => _HomeViewState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
+class _HomeViewState extends State<HomeView> {
   @override
-  List<PostModel> postList = [];
-
   Widget build(BuildContext context) {
-    AuthService authService = AuthService();
-    var userID = authService.getUserID();
-    PostService postService = PostService(userID);
     return Scaffold(
       appBar: AppBar(
         toolbarHeight: 60,
@@ -30,10 +25,7 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
         actions: [
           IconButton(
-            onPressed: () async {
-              AuthService authService = AuthService();
-              authService.signOut();
-            },
+            onPressed: () async {},
             icon: const Icon(Icons.favorite_border),
             color: Colors.black,
           ),
@@ -45,7 +37,7 @@ class _MyHomePageState extends State<MyHomePage> {
         ],
       ),
       body: Column(
-        children: [storiesBuilder(), postsBuilder(context, postService)],
+        children: [storiesBuilder()],
       ),
       bottomNavigationBar: BottomNavigationBar(
         backgroundColor: Colors.white,
@@ -80,11 +72,11 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   Widget storiesBuilder() {
-    List<StoryModel> storyList = [
-      StoryModel(
+    List<Story> storyList = [
+      Story(
           storyImage:
               'https://upload.wikimedia.org/wikipedia/commons/thumb/3/3f/Official_portrait_of_Petro_Poroshenko.jpg/1200px-Official_portrait_of_Petro_Poroshenko.jpg',
-          userName: 'yura')
+          userName: 'Yuri')
     ];
 
     return SizedBox(
@@ -124,7 +116,7 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
-  Widget postsBuilder(BuildContext context, PostService postService) {
+  Widget postsBuilder(BuildContext context, PostRepository postService) {
     return StreamBuilder<List<PostModel>>(
         stream: postService.readAllUsersPosts(),
         builder: (context, AsyncSnapshot<List<PostModel>> snapshot) {
@@ -196,7 +188,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         children: [
                           IconButton(
                               onPressed: () {},
-                              icon: Icon(Icons.favorite_outline)),
+                              icon: const Icon(Icons.favorite_outline)),
                           IconButton(
                               onPressed: () {},
                               icon:
@@ -285,6 +277,5 @@ class _MyHomePageState extends State<MyHomePage> {
             return Container();
           }
         });
-    /**/
   }
 }

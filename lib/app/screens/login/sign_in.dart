@@ -1,18 +1,17 @@
-// ignore_for_file: file_names
-
 import 'package:flutter/material.dart';
+import 'package:instagram_prototype/app/screens/login/login_view_model.dart';
 
-import '../../Services/Auth.dart';
-import '../../Shared/Constants.dart';
+import '../../common/Constants.dart';
 
-// ignore: use_key_in_widget_constructors
-class LoginPage extends StatefulWidget {
+class LoginView extends StatefulWidget {
+  final LoginViewModel model;
+
+  const LoginView({super.key, required this.model});
   @override
-  State<LoginPage> createState() => _LoginPageState();
+  State<LoginView> createState() => _LoginViewState();
 }
 
-class _LoginPageState extends State<LoginPage> {
-  final AuthService _auth = AuthService();
+class _LoginViewState extends State<LoginView> {
   String email = '';
   String password = '';
   final _formKey = GlobalKey<FormState>();
@@ -58,7 +57,7 @@ class _LoginPageState extends State<LoginPage> {
                         textInputDecoration.copyWith(hintText: "Password"),
                     obscureText: true,
                     validator: (value) => value!.length < 8
-                        ? 'Enter a password 8+ charactercs'
+                        ? 'Enter a password 8+ characters'
                         : null,
                     style: const TextStyle(),
                     onChanged: (val) {
@@ -76,13 +75,13 @@ class _LoginPageState extends State<LoginPage> {
                     child: TextButton(
                       onPressed: () async {
                         if (_formKey.currentState!.validate()) {
-                          dynamic result =
-                              await _auth.signInWithPassword(email, password);
-                          if (result == null) {
+                          /*dynamic result =
+                              await _auth.signInWithPassword(email, password);*/
+                          /*  if (result == null) {
                           } else {
                             // ignore: use_build_context_synchronously
                             Navigator.pop(context);
-                          }
+                          }*/
                         }
                       },
                       style: ButtonStyle(

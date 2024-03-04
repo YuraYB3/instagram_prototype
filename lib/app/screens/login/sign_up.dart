@@ -1,13 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
-import '../../Model/UserModel.dart';
-import '../../Services/Auth.dart';
-import '../../Services/DatabaseUser.dart';
-import '../../Shared/Constants.dart';
-
-// ignore: use_key_in_widget_constructors
 class SignUp extends StatefulWidget {
+  const SignUp({super.key});
+
   @override
   State<SignUp> createState() => _SignUpState();
 }
@@ -19,13 +14,15 @@ class _SignUpState extends State<SignUp> {
   String error = '';
   String name = '';
   String surname = '';
-  final AuthService _auth = AuthService();
-  final _formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
     // ignore: prefer_const_constructors
-    return StreamProvider<List<UserModel>?>.value(
-        value: DatabaseUserService(uid: '').users,
+    return Container();
+  }
+}
+/*
+ StreamProvider<List<UserModel>?>.value(
+        value: UserRepository(uid: '').users,
         initialData: null,
         child: Scaffold(
           resizeToAvoidBottomInset: false,
@@ -83,7 +80,7 @@ class _SignUpState extends State<SignUp> {
                     const SizedBox(height: 20),
                     TextFormField(
                       validator: (value) => value!.length < 8
-                          ? 'Enter a password 8+ charactercs'
+                          ? 'Enter a password 8+ characters'
                           : null,
                       decoration:
                           textInputDecoration.copyWith(hintText: "Password"),
@@ -118,7 +115,7 @@ class _SignUpState extends State<SignUp> {
                         onPressed: () async {
                           try {
                             if (_formKey.currentState!.validate()) {
-                              dynamic result = await _auth.register(
+                              dynamic result = _auth.register(
                                   email, password, surname, name);
                               if (result == null) {
                                 setState(() {
@@ -149,8 +146,4 @@ class _SignUpState extends State<SignUp> {
             ),
           ),
         ));
-  }
-}
-/*
- 
                         */

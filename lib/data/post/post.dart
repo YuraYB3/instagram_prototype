@@ -1,19 +1,32 @@
-class PostModel {
+import 'package:instagram_prototype/domain/post/ipost.dart';
+
+class PostModel implements IPost {
+  @override
+  String id;
+  @override
   String userID;
+  @override
   String userName;
+  @override
   String userImage;
+  @override
   String? location;
+  @override
   String? description;
+  @override
   String postImage;
 
   PostModel(
-      {required this.userID,
+      {this.id = '',
+      required this.userID,
       required this.userName,
       required this.userImage,
       this.location,
       required this.postImage,
       this.description});
-  static PostModel fromJson(Map<String, dynamic> json) => PostModel(
+
+  factory PostModel.fromJson(Map<String, dynamic> json) => PostModel(
+      id: json['id'],
       userID: json['userID'],
       userName: json['userName'],
       userImage: json['userImage'],
@@ -21,6 +34,7 @@ class PostModel {
       description: json['description'],
       postImage: json['postImage']);
 
+  @override
   Map<String, dynamic> toJson() => {
         'userID': userID,
         'userName': userName,
